@@ -1,0 +1,212 @@
+<html>
+    <Head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script>
+            $(document).ready(function () {
+            //getlistreq=$.getJSON("http://127.0.0.1:8000/polls/GET/");      
+            $.fn.WaitFunction=function (ms) {
+                var start = Date.now(),
+                    now = start;
+                while (now - start < ms) {
+                now = Date.now();
+                }
+            };
+            $.fn.AddRowFunction = function() {
+                console.log("Adding Row")
+                console.log("Requested")
+                getlist=getlistreq["responseJSON"]
+                console.log("Dict obtained")
+                currentques=getlist[0]
+                console.log("quesdict obtained")
+                quesno=1
+                ques=currentques["Question"]
+                votes=0
+                votecontainer=Object.values(currentques["OptionVote"])
+                console.log(votecontainer)
+                for (let i = 0; i < votecontainer.length; i++) {
+                    votes +=votecontainer[i];
+                    }
+                
+                tags=currentques["Tags"]
+
+                markup = "<tr class='Content'><td class='No'>"+quesno.toString()+"</td><td class='Question'>"+ques+"</td><td class='Votes'>"+votes+"</td><td class='Tags'>"+tags+"</td></tr>"
+                tableBody = $("table")
+                tableBody.append(markup)
+
+                ; 
+            };
+            $.fn.DisplayData = function() {
+                console.log("Adding Row")
+                console.log("Requested")
+                console.log(getlistreq)
+                //getlist=getlistreq//
+                getlist=getlistreq["responseJSON"]
+                console.log("Dict obtained")
+                console.log(getlist)
+                for (let i = 0; i < getlist.length; i++){
+                    currentques=getlist[i]
+                    console.log("quesdict obtained")
+                    quesno=i+1
+                    ques=currentques["Question"]
+                    votes=0
+                    votecontainer=Object.values(currentques["OptionVote"])
+                    console.log(votecontainer)
+                    for (let i = 0; i < votecontainer.length; i++) {
+                        votes +=votecontainer[i];
+                    }
+                    
+                    tags=currentques["Tags"]
+
+                    markup = "<tr class='Content'><td class='No'>"+quesno.toString()+"</td><td class='Question'>"+ques+"</td><td class='Votes'>"+votes+"</td><td class='Tags'>"+tags+"</td></tr>"
+                    tableBody = $("table")
+                    tableBody.append(markup)}
+                
+
+                ;
+            
+            };
+            $.fn.WaitFunction(1000)
+            console.log("hi")
+            
+            });
+        </script>
+        <style>
+            div.ex1 {
+                width: 1600px;;
+                /*height: 800px;;*/
+                border: 5px solid gray;
+                margin: auto;
+                margin-top: 30px;
+            }
+            div.ex2{
+                width:1350px;
+                /*height:125px;*/
+                padding: 10px;
+                border: 10px solid gray;
+                background-color: rgb(237, 233, 227);
+                margin-left: 0;
+                margin-top: 0;
+
+            }
+            .button1{
+                margin-left: 60;
+                margin-top: 20;
+                border: none;
+                border-style: inset;
+                color: rgb(255, 255, 255);
+                padding: 15px 32px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                cursor: pointer;
+                background-color: #00a2ff;
+                width:175px;
+            }
+            div.ex3{
+                width:175px;
+                /*height:120px;*/
+                padding: 10px;
+                border: 2px solid rgb(189, 189, 189);
+                background-color: rgb(237, 233, 227);
+                margin-left: 60;
+                margin-top: 10;
+
+            }
+            div.top{
+                width: 1620px;;
+                height: 820px;;
+                margin: auto;
+                margin-top: 30px;
+            }
+            table{
+                 border: 1px solid black;
+                 margin-left: 275px;
+                 margin-top: -200px;
+                 width: 900;
+                }
+            th{
+                 border:1px solid rgb(141, 139, 139);font-family: Verdana, Geneva, Tahoma, sans-serif;
+                }
+            td.No{
+                 border:1px solid rgb(141, 139, 139);font-family: Verdana, Geneva, Tahoma, sans-serif;
+                }
+            td.Question{
+                 border:1px solid rgb(141, 139, 139);font-family: Verdana, Geneva, Tahoma, sans-serif;
+                }
+            td.Votes{
+                 border:1px solid rgb(141, 139, 139);font-family: Verdana, Geneva, Tahoma, sans-serif;
+                }
+            td.Tags{
+                 border:1px solid rgb(141, 139, 139);font-family: Verdana, Geneva, Tahoma, sans-serif;
+                }
+            label{
+                font-family: Verdana, Geneva, Tahoma, sans-serif
+
+            }
+            tr.Heading{
+                background-color:#cccccc;
+                height:40px
+            }
+            tr.Content{
+                height:80px
+            }
+        </style>
+
+        <script src="indexscript.js">
+            
+        </script>
+    </Head>
+    <body>
+        <div class="top">
+            <h1 style="margin: auto;margin-top:10;font-family: Arial, Helvetica, sans-serif;">HOME</h1>
+            <div class="ex1">
+                <div class="ex2">
+                    <h1 style="font-family:verdana;"><b>FlyWeight Polls</b></h1>
+                </div> 
+                <button class="button1" id="button" style="font-family:verdana;" id="CreateButton" onclick="window.location.href='CreatePage.html'"><b>Create Poll</b></button>
+                <div class="ex3">
+                    <!--<form>
+                        <input type="checkbox" id="topic1" name="topic1" value="Sports">
+                        <label for="topic1"> Sports</label><br>
+                        <input type="checkbox" id="topic2" name="topic2" value="Games">
+                        <label for="topic2"> Games</label><br>
+                        <input type="checkbox" id="topic3" name="topic3" value="Health">
+                        <label for="topic3"> Health</label><br>
+                        <input type="checkbox" id="topic4" name="topic4" value="Politics">
+                        <label for="topic4"> Politics</label><br><br>
+    
+                        <input type="submit" value="Filter by tags">
+                      </form>-->
+                   
+                </div>
+                <table>
+                    <tr class="Heading">
+                      <th>Number</th>
+                      <th>Poll Question</th>
+                      <th>Total Votes</th>
+                      <th>Tags</th>
+                    </tr>
+                    <!-- <tr class="Content">
+                      <td class="No">1</td>
+                      <td class="Question">Will India win the ICC World cup next time?<br>
+                          <hr style="background-color:blue;color:blue;height:2px;width:75%;text-align:left;margin-left:0"></td>
+                      <td class="Votes">22</td>
+                      <td class="Tags">Sports,Games</td>
+                    </tr>
+                    <tr class="Content">
+                      <td class="No">2</td>
+                      <td class="Question">What will be the total corona casualities by the next year globally?<br>
+                        <hr style="background-color:blue;color:blue;height:2px;width:75%;text-align:left;margin-left:0"></td>
+                      <td class="Votes">10</td>
+                      <td class="Tags">Health, Politics</td>
+                    </tr>--> 
+                </table>
+                
+            </div>
+        </div>
+        
+        
+        
+    </body>
+</html>
