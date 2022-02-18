@@ -1,0 +1,201 @@
+<html>
+    <Head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="Votepagescript.js"></script>
+        <style>
+            div.ex1 {
+                width: 1600px;;
+                height: 800px;;
+                border: 5px solid gray;
+                margin: auto;
+                margin-top: 30px;
+            }
+            div.ex2{
+                width:1350px;
+                height:120px;
+                padding: 10px;
+                border: 10px solid gray;
+                background-color: rgb(237, 233, 227);
+                margin-left: 0;
+                margin-top: 0;
+
+            }
+            .button1{
+                margin-left: 60;
+                margin-top: 20;
+                border: none;
+                border-style:double;
+                padding: 15px 32px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                cursor: pointer;
+                width:175px;
+            }
+            div.ex3{
+                width:175px;
+                height:120px;
+                padding: 10px;
+                margin-left: 60;
+                margin-top: 10;
+
+            }
+            div.top{
+                width: 1620px;;
+                height: 820px;;
+                margin: auto;
+                margin-top: 30px;
+            }
+            table{
+                 border: 1px solid black;
+                 margin-left: 60px;
+                 margin-top: 15px;
+                }
+            th,td{
+                 border:1px solid rgb(141, 139, 139);font-family: Verdana, Geneva, Tahoma, sans-serif;font-weight: bolder;
+                }
+            label{
+                font-family: Verdana, Geneva, Tahoma, sans-serif
+            }
+            .dot {
+            height: 300px;
+            width: 300px;
+            margin-left: 1000px;
+            margin-top: -300px;
+            background-color: rgb(151, 206, 238);
+            border: 5px solid gray;
+            border-radius: 50%;
+            display: inline-block;
+            }
+            p.ex1{
+                left: 1150px;
+                top: -220px;
+                position: relative;
+                font-family: Verdana, Geneva, Tahoma, sans-serif;
+            }
+            p.ex2{
+                left: 1065px;
+                top: -160px;
+                position: relative;
+                font-family: Verdana, Geneva, Tahoma, sans-serif;
+            }
+            p.ex3{
+                left: 1120px;
+                top: 750 px;
+                position: relative;
+                font-family: Verdana, Geneva, Tahoma, sans-serif;
+            }
+            p.ex4{
+                left: 50px;
+                top: 0px;
+                position: relative;
+                font-family: Verdana, Geneva, Tahoma, sans-serif;
+            }
+        </style>
+    </Head>
+    <body>
+        <div class="top">
+            <h1 style="margin: auto;margin-top:10;font-family: Arial, Helvetica, sans-serif;" ><b>Vote on this poll</b></h1>
+            <div class="ex1">
+                <div class="ex2">
+                    <h1 style="font-family:verdana;"><b>FlyWeight Polls</b></h1>
+                </div> 
+
+                <h1 style="font-family:verdana;margin-left: 57px;" id="QuestionTitle"><b>Will India win the ICC World Cup next time?</b></h1>
+                <div class="ex3">
+                </div>
+            </div>
+            
+        </div>
+        
+        
+        
+    </body>
+</html>
+
+<script>
+var url_string = window.location.href;
+
+var url = new URL(url_string);
+var qsno = url.searchParams.get("value");
+
+getlistreq=$.getJSON("http://127.0.0.1:8000/polls/GET/",function(data){
+    for (i=0;i<data.length;i++){
+        thisques=data[i]
+        console.log("thisques is",thisques)
+        console.log("thisques values are",Object.values(thisques))
+        if (Object.values(thisques)[3]==qsno){
+            questiondict=data[i]
+        }
+    }
+    console.log(questiondict)
+    document.getElementById("QuestionTitle").innerHTML = questiondict["Question"]
+    
+    Choices=questiondict['OptionVote']
+    var markup='<form id="Choiceform">'
+    console.log("Choices are",Choices[Object.keys(Choices)[0]])
+
+    for(let i=0; i<Object.keys(Choices).length; i++){
+        currenttopic="topic"+i
+        choice=Object.keys(Choices)[i]
+        currentinput='<input type="radio" id='+ currenttopic+ ' value='+choice+'>'
+        currentindex='<label for="topic'+i+'"'+'>'+Object.keys(Choices)[i];+'</label><br>'
+        markup+=currentinput
+        markup+=currentindex
+        markup+='<br>'
+    }
+    markup+='<br>'
+    markup+='<input type="button" value="Vote" id=submitbutton onclick="VoteFunction()";>'
+    markup+="</form>"
+    choicebody=$('div.ex3')
+    choicebody.append(markup)
+    document.getElementById("submitbutton").click(function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        return false;
+    })
+});
+
+function VoteFunction(){
+    Choiceform=document.getElementById('Choiceform')
+    postlink="http://127.0.0.1:8000/polls/PUT/"+(parseInt(qsno))
+    getlistreq=$.getJSON("http://127.0.0.1:8000/polls/GET/",function(data){
+        for (i=0;i<data.length;i++){
+            thisques=data[i]
+            console.log("thisques is",thisques)
+            console.log("thisques values are",Object.values(thisques))
+            if (Object.values(thisques)[3]==qsno){
+                questiondict=data[i]
+            }
+        }
+        document.getElementById("QuestionTitle").innerHTML = questiondict["Question"]
+        Choices=questiondict['OptionVote'];
+        for(let i=0; i<Choiceform.length-1; i++){
+            if (Choiceform[i].checked){
+                Choiceincrement=Object.keys(Choices)[i]
+                break
+            };
+        };
+        console.log("Choiceincrement is",Choiceincrement)
+        payload={"incrementOption":Choiceincrement}
+        
+        //$.ajax({
+       //     url: postlink,
+       //     type: 'PUT',
+        //    body: JSON.stringify(payload)
+     //   })
+        fetch(postlink,{
+            method: 'PUT',
+            headers:{
+            'Content-Type':'application/json'
+            },
+            body: JSON.stringify(payload)
+        })
+        //$.post(postlink, payload)
+        window.location.href="index.html"
+    }) 
+}
+
+</script>

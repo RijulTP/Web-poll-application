@@ -1,0 +1,436 @@
+<html>
+    <Head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="detailscript.js"></script>
+        <script src="https://cdn.anychart.com/releases/8.0.1/js/anychart-core.min.js"></script>
+        <script src="https://cdn.anychart.com/releases/8.0.1/js/anychart-pie.min.js"></script>
+        <link rel="stylesheet" href="piechartsheet.css">
+        <style>
+            .wrapper {
+    width: 400px;
+    height: 400px;
+    margin-top: -300px;
+    margin-left: 1100px;
+    position: static;
+    background: #FC5B3F;
+    /*margin: 10px auto;*/
+    border-radius: 47%;
+    border: white;
+    border-width: 0px;
+    overflow: hidden;
+    box-shadow: none;
+    
+    /*position: relative;*/
+}
+            .wrapper .d1 {
+                width: 800px;
+                height: 800px;
+                position: absolute;
+                top: -200px;
+                left: -200px;
+                transform: rotate(0deg);
+            }
+                .wrapper .d1 div {
+                width: 800px;
+                height: 800px;
+                }
+                .wrapper .d1 div:after {
+                content: '';
+                width: 0;
+                height: 0;
+                display: block;
+                border: solid transparent;
+                border-width: 400px;
+                border-top-color: #FC5B3F;
+                position: relative;
+                transform: scaleX(-3.07768);
+                }
+            .wrapper .d1 div span {
+                display: block;
+                width: 100%;
+                position: absolute;
+                left: 0;
+                top: 34%;
+                font-size: 12px;
+                text-align: center;
+                z-index: 100;
+                color: #fff;
+                transform: rotate(-108deg);
+                }
+                .wrapper .d2 {
+                width: 800px;
+                height: 800px;
+                position: absolute;
+                top: -200px;
+                left: -200px;
+                transform: rotate(147.6deg);
+                }
+            .wrapper .d2 div {
+            width: 800px;
+            height: 800px;
+            }
+            .wrapper .d2 div:after {
+            content: '';
+            width: 0;
+            height: 0;
+            display: block;
+            border: solid transparent;
+            border-width: 400px;
+            border-top-color: #FCB03C;
+            position: relative;
+            transform: scaleX(0.82727);
+            }
+            .wrapper .d2 div span {
+            display: block;
+            width: 100%;
+            position: absolute;
+            left: 0;
+            top: 34%;
+            font-size: 12px;
+            text-align: center;
+            z-index: 100;
+            color: #fff;
+            transform: rotate(-255.6deg);
+            }
+            .wrapper .d3 {
+                width: 800px;
+                height: 800px;
+                position: absolute;
+                top: -200px;
+                left: -200px;
+                transform: rotate(201.6deg);
+            }
+            .wrapper .d3 div {
+                width: 800px;
+                height: 800px;
+            }
+            .wrapper .d3 div:after {
+                content: '';
+                width: 0;
+                height: 0;
+                display: block;
+                border: solid transparent;
+                border-width: 400px;
+                border-top-color: #6FB07F;
+                position: relative;
+                transform: scaleX(0.25676);
+            }
+            .wrapper .d3 div span {
+                display: block;
+                width: 100%;
+                position: absolute;
+                left: 0;
+                top: 34%;
+                font-size: 12px;
+                text-align: center;
+                z-index: 100;
+                color: #fff;
+                transform: rotate(-309.6deg);
+            }
+            .wrapper .d4 {
+                width: 800px;
+                height: 800px;
+                position: absolute;
+                top: -200px;
+                left: -200px;
+                transform: rotate(228.6deg);
+            }
+            .wrapper .d4 div {
+                width: 800px;
+                height: 800px;
+            }
+            .wrapper .d4 div:after {
+                content: '';
+                width: 0;
+                height: 0;
+                display: block;
+                border: solid transparent;
+                border-width: 400px;
+                border-top-color: #068587;
+                position: relative;
+                transform: scaleX(0.22353);
+            }
+            .wrapper .d4 div span {
+                display: block;
+                width: 100%;
+                position: absolute;
+                left: 0;
+                top: 34%;
+                font-size: 12px;
+                text-align: center;
+                z-index: 100;
+                color: #fff;
+                transform: rotate(-336.6deg);
+            }
+            .wrapper .d5 {
+                width: 800px;
+                height: 800px;
+                position: absolute;
+                top: -200px;
+                left: -200px;
+                transform: rotate(246.6deg);
+            }
+            .wrapper .d5 div {
+                width: 800px;
+                height: 800px;
+            }
+            .wrapper .d5 div:after {
+                content: '';
+                width: 0;
+                height: 0;
+                display: block;
+                border: solid transparent;
+                border-width: 400px;
+                border-top-color: #1A4F63;
+                position: relative;
+                transform: scaleX(0.09453);
+            }
+            .wrapper .d5 div span {
+                display: block;
+                width: 100%;
+                position: absolute;
+                left: 0;
+                top: 34%;
+                font-size: 12px;
+                text-align: center;
+                z-index: 100;
+                color: #fff;
+                transform: rotate(-354.6deg);
+            }
+            div.ex1 {
+                width: 1600px;;
+                height: 800px;;
+                border: 5px solid gray;
+                margin: auto;
+                margin-top: 30px;
+            }
+            div.ex2{
+                width:1350px;
+                height:120px;
+                padding: 10px;
+                border: 10px solid gray;
+                background-color: rgb(237, 233, 227);
+                margin-left: 0;
+                margin-top: 0;
+
+            }
+            .button1{
+                margin-left: 60;
+                margin-top: 20;
+                border: none;
+                border-style:double;
+                padding: 15px 32px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                cursor: pointer;
+                width:175px;
+            }
+            div.ex3{
+                width:175px;
+                height:120px;
+                padding: 10px;
+                border: 2px solid rgb(189, 189, 189);
+                background-color: rgb(237, 233, 227);
+                margin-left: 60;
+                margin-top: 10;
+
+            }
+            div.top{
+                width: 1620px;;
+                height: 820px;;
+                margin: auto;
+                margin-top: 30px;
+            }
+            table{
+                 border: 1px solid black;
+                 margin-left: 60px;
+                 margin-top: 15px;
+                }
+            th,td{
+                 border:1px solid rgb(141, 139, 139);font-family: Verdana, Geneva, Tahoma, sans-serif;font-weight: bolder;
+                }
+            label{
+                font-family: Verdana, Geneva, Tahoma, sans-serif
+            }
+            .dot {
+            height: 300px;
+            width: 300px;
+            margin-left: 1000px;
+            margin-top: -300px;
+            background-color: rgb(151, 206, 238);
+            border: 5px solid gray;
+            border-radius: 50%;
+            display: inline-block;
+            }
+            p.ex1{
+                left: 1150px;
+                top: -220px;
+                position: relative;
+                font-family: Verdana, Geneva, Tahoma, sans-serif;
+            }
+            p.ex2{
+                left: 1065px;
+                top: -160px;
+                position: relative;
+                font-family: Verdana, Geneva, Tahoma, sans-serif;
+            }
+            p.ex3{
+                left: 1120px;
+                top: 750 px;
+                position: relative;
+                font-family: Verdana, Geneva, Tahoma, sans-serif;
+            }
+            p.ex4{
+                left: 50px;
+                top: 0px;
+                position: relative;
+                font-family: Verdana, Geneva, Tahoma, sans-serif;
+            }
+            tr.Heading{
+                background-color:#cccccc;
+                height:40px
+            }
+            tr.Content{
+                height:80px
+            }
+            .piechart {
+            margin-top: 220px;
+            margin-left: 1100px;
+            display: block;
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background-image: conic-gradient(
+                pink 70deg, 
+                lightblue 0 235deg, 
+                orange 0);
+        }
+  
+        body,
+        .piechart {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        </style>
+    </Head>
+    <body>
+        <div class="top">
+            <h1 style="margin: auto;margin-top:10;font-family: Arial, Helvetica, sans-serif;">PollDetail</h1>
+            <div class="ex1">
+                <div class="ex2">
+                    <h1 style="font-family:verdana;"><b>FlyWeight Polls</b></h1>
+                </div> 
+                <h1 style="font-family:verdana;margin-left: 57px;" id="QuestionTitle"><b>Will India win the ICC World Cup next time?</b></h1>
+                <button class="button1" style="font-family:verdana;" onclick="window.location.href='Votepage.html'" id="Votebutton"><b>Vote on this poll</b></button>
+                
+                <table>
+                    <tr class="Heading">
+                      <th  width="100px">Number</th>
+                      <th  width="300px">Option</th>
+                      <th  width="500px">Votes</th>
+                    </tr>
+                </table>
+                <div class="wrapper" id="Container">
+                    <!--
+                    <div class="d1"><div><span>60%</span></div></div>
+                    <div class="d2"><div><span>22%</span></div></div>
+                    <div class="d3"><div><span>8%</span></div></div>
+                    <div class="d4"><div><span>7%</span></div></div>
+                    <div class="d5"><div><span>3%</span></div></div>-->
+                </div>
+                <p class="ex3" id="TotalVotes"><b>Total Votes:22</b></p>
+                <p class="ex4" id="Tags">Tags:Sports,Games</p>
+            </div>
+            
+</div>
+        </div>
+        
+        
+        
+    </body>
+</html>
+<script>
+
+var url_string = window.location.href;
+
+var url = new URL(url_string);
+var qsno = url.searchParams.get("value");
+var votepagelink="Votepage.html?value="+qsno
+window.onload = function(){ 
+    var onclickvalue="window.location.href="+"'"+votepagelink+"'"
+    console.log(onclickvalue)
+    
+    
+    function NewLink(){
+        window.location.href="Votepage.html?value="+qsno
+    }
+    document.getElementById("Votebutton").onclick=NewLink
+};
+
+getlistreq=$.getJSON("http://127.0.0.1:8000/polls/GET/",function(data){
+    for (i=0;i<data.length;i++){
+        thisques=data[i]
+        console.log("thisques is",thisques)
+        console.log("thisques values are",Object.values(thisques))
+        if (Object.values(thisques)[3]==qsno){
+            questiondict=data[i]
+        }
+    }
+        
+    //questiondict=data[qsno]
+    console.log(questiondict)
+    document.getElementById("QuestionTitle").innerHTML = questiondict["Question"];
+    
+    
+    tableBody = $("table")
+    Choices=questiondict['OptionVote']
+    tags=questiondict['Tags']
+    console.log(Object.keys(Choices).length)
+    for (i=0;i<Object.keys(Choices).length;i++){
+        console.log('Choice added')
+        quesno=i+1
+        choice=Object.keys(Choices)[i]
+        vote=Choices[choice]
+        markup = "<tr class='Content'><td class='No'>"+quesno.toString()+"</td><td class='Question'>"+choice+"</td><td class='Votes'>"+vote+"</td></tr>"
+        tableBody.append(markup);
+    }
+    document.getElementById("Tags").innerHTML = "Tags:"+tags;
+
+    totalvotes=0
+    votecontainer=Object.values(questiondict["OptionVote"])
+    for (let j = 0; j < votecontainer.length; j++) {
+            totalvotes +=votecontainer[j];
+    }
+    console.log("Total votes are",totalvotes)
+    document.getElementById("TotalVotes").innerHTML = "Total Votes:"+totalvotes;
+
+    var data = [];
+
+    for (i=0;i<Object.keys(Choices).length;i++){
+        choice=Object.keys(Choices)[i]
+        vote=Choices[choice]
+        newObj={}
+        newObj.x = choice;
+        newObj.value=vote;
+        data.push(newObj)
+
+    };
+
+   
+    var chart = anychart.pie();
+  
+    // add the data
+    chart.data(data);
+  
+    // display the chart in the container
+    chart.container('Container');
+    chart.draw();
+
+});
+
+</script>

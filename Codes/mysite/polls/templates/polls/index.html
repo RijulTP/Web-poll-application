@@ -1,0 +1,279 @@
+{% load static %}
+<html>
+    <Head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <style>
+            div.ex1 {
+                width: 1600px;;
+                /*height: 800px;;*/
+                border: 5px solid gray;
+                margin: auto;
+                margin-top: 30px;
+            }
+            div.ex2{
+                width:1350px;
+                /*height:125px;*/
+                padding: 10px;
+                border: 10px solid gray;
+                background-color: rgb(237, 233, 227);
+                margin-left: 0;
+                margin-top: 0;
+
+            }
+            .button1{
+                margin-left: 60;
+                margin-top: 20;
+                border: none;
+                border-style: inset;
+                color: rgb(255, 255, 255);
+                padding: 15px 32px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                cursor: pointer;
+                background-color: #00a2ff;
+                width:175px;
+            }
+            div.ex3{
+                width:175px;
+                /*height:120px;*/
+                padding: 10px;
+                border: 2px solid rgb(189, 189, 189);
+                background-color: rgb(237, 233, 227);
+                margin-left: 60;
+                margin-top: 10;
+
+            }
+            div.top{
+                width: 1620px;;
+                height: 820px;;
+                margin: auto;
+                margin-top: 30px;
+            }
+            table{
+                 border: 1px solid black;
+                 margin-left: 275px;
+                 margin-top: -200px;
+                 width: 900;
+                }
+            th{
+                 border:1px solid rgb(141, 139, 139);font-family: Verdana, Geneva, Tahoma, sans-serif;
+                }
+            td.No{
+                 border:1px solid rgb(141, 139, 139);font-family: Verdana, Geneva, Tahoma, sans-serif;
+                }
+            td.Question{
+                 border:1px solid rgb(141, 139, 139);font-family: Verdana, Geneva, Tahoma, sans-serif;
+                }
+            td.Votes{
+                 border:1px solid rgb(141, 139, 139);font-family: Verdana, Geneva, Tahoma, sans-serif;
+                }
+            td.Tags{
+                 border:1px solid rgb(141, 139, 139);font-family: Verdana, Geneva, Tahoma, sans-serif;
+                }
+            label{
+                font-family: Verdana, Geneva, Tahoma, sans-serif
+
+            }
+            tr.Heading{
+                background-color:#cccccc;
+                height:40px
+            }
+            tr.Content{
+                height:80px
+            }
+        </style>
+
+        <script src="indexscript.js">
+            
+        </script>
+    </Head>
+    <body>
+        <div class="top">
+            <h1 style="margin: auto;margin-top:10;font-family: Arial, Helvetica, sans-serif;">HOME</h1>
+            <div class="ex1">
+                <div class="ex2">
+                    <h1 style="font-family:verdana;"><b>FlyWeight Polls</b></h1>
+                </div> 
+                <button class="button1" id="button" style="font-family:verdana;" id="CreateButton" onclick="window.location.href='CreatePage.html'"><b>Create Poll</b></button>
+                <div class="ex3">
+                    <!--<form>
+                        <input type="checkbox" id="topic1" name="topic1" value="Sports">
+                        <label for="topic1"> Sports</label><br>
+                        <input type="checkbox" id="topic2" name="topic2" value="Games">
+                        <label for="topic2"> Games</label><br>
+                        <input type="checkbox" id="topic3" name="topic3" value="Health">
+                        <label for="topic3"> Health</label><br>
+                        <input type="checkbox" id="topic4" name="topic4" value="Politics">
+                        <label for="topic4"> Politics</label><br><br>
+    
+                        <input type="submit" value="Filter by tags">
+                      </form>-->
+                   
+                </div>
+                <table>
+                    <tr class="Heading">
+                      <th>Number</th>
+                      <th>Poll Question</th>
+                      <th>Total Votes</th>
+                      <th>Tags</th>
+                    </tr>
+                    <!-- <tr class="Content">
+                      <td class="No">1</td>
+                      <td class="Question">Will India win the ICC World cup next time?<br>
+                          <hr style="background-color:blue;color:blue;height:2px;width:75%;text-align:left;margin-left:0"></td>
+                      <td class="Votes">22</td>
+                      <td class="Tags">Sports,Games</td>
+                    </tr>
+                    <tr class="Content">
+                      <td class="No">2</td>
+                      <td class="Question">What will be the total corona casualities by the next year globally?<br>
+                        <hr style="background-color:blue;color:blue;height:2px;width:75%;text-align:left;margin-left:0"></td>
+                      <td class="Votes">10</td>
+                      <td class="Tags">Health, Politics</td>
+                    </tr>--> 
+                </table>
+                
+            </div>
+        </div>
+        
+        
+        
+    </body>
+</html>
+<script>
+    
+getlistreq=$.getJSON("http://127.0.0.1:8000/polls/GET/",function(data){
+    //len=getlist.length
+    for (let i = 0; i < data.length; i++){
+        currentques=data[i]
+        quesno=i+1
+        ques=currentques["Question"]
+        
+        votes=0
+        votecontainer=Object.values(currentques["OptionVote"])
+        for (let j = 0; j < votecontainer.length; j++) {
+            votes +=votecontainer[j];
+        }
+        tags=currentques["Tags"]
+
+        assignedhref="Detail.html?value="+currentques["QID"]
+
+        markup = "<tr class='Content'><td class='No'>"+quesno.toString()+"</td><td class='Question'>"+"<a href="+assignedhref+">"+ques+"</a>"+"</td><td class='Votes'>"+votes+"</td><td class='Tags'>"+tags+"</td></tr>"
+        tableBody = $("table")
+        tableBody.append(markup)};
+});
+
+function tagexists(taglist,tagtobechecked){
+    console.log("Tagexists")
+    for(let i=0; i<taglist.length; i++){
+        console.log("The tag list is",taglist)
+        if (taglist[i]==tagtobechecked){
+            console.log("The Checking set are",taglist[i],tagtobechecked)
+            return true
+        }
+    }
+    console.log("false")
+    return false
+}
+
+gettagsreq=$.getJSON("http://127.0.0.1:8000/polls/GET/tags/",function(data){
+    markup='<form id="tagform">'
+    const tagaddedlist=[]
+    for(let i=0; i<data.length; i++){
+        if (tagexists(tagaddedlist,data[i])==false){
+            currenttopic="topic"+i
+            currentinput='<input type="checkbox" id='+ currenttopic+ ' value='+data[i]+'>'
+            currentindex='<label for="topic'+i+'"'+'>'+data[i]+'</label><br>'
+            markup+=currentinput
+            markup+=currentindex
+            tagaddedlist.push(data[i])
+        } 
+    }
+    markup+='<br>'
+    markup+='<input type="button" value="Filter by tags" id=submitbutton onclick="FilterData()";>'
+    markup+='</form>'
+
+    tagbody=$('div.ex3')
+    tagbody.append(markup)
+    tagsubmit=document.getElementById('submitbutton')
+    console.log(tagsubmit)
+    tagform=document.getElementById('tagform')
+    console.log(tagform.firstchild)
+    op1=tagform[0]
+
+    console.log(tagform[1])
+
+});
+
+
+
+function FilterData(){
+    console.log("Button Clicked")
+    tagform=document.getElementById('tagform')
+    var checklist=[]
+    for(let i=0; i<tagform.length-1; i++){
+        if (tagform[i].checked){
+            checklist.push(tagform[i].value)
+        }
+    }
+    console.log(document.getElementsByTagName("tr").length);
+    $('table').detach();
+    markup = "<table></table>";
+    tablecontainer=$('div.ex1');
+    tablecontainer.append(markup);
+    tableBody = $("table")
+    headermarkup='<tr class="Heading"><th>Number</th><th>Poll Question</th><th>Total Votes</th><th>Tags</th></tr>'
+    tableBody.append(headermarkup)
+    console.log(checklist)
+    if (checklist.length==0){
+        getlistreq=$.getJSON("http://127.0.0.1:8000/polls/GET/",function(data){
+    //len=getlist.length
+        for (let i = 0; i < data.length; i++){
+            currentques=data[i]
+            quesno=i+1
+            ques=currentques["Question"]
+            votes=0
+            votecontainer=Object.values(currentques["OptionVote"])
+            for (let j = 0; j < votecontainer.length; j++) {
+                votes +=votecontainer[j];
+            }
+            tags=currentques["Tags"]
+
+            assignedhref="Detail.html?value="+currentques["QID"]
+
+            markup = "<tr class='Content'><td class='No'>"+quesno.toString()+"</td><td class='Question'>"+"<a href="+assignedhref+">"+ques+"</a>"+"</td><td class='Votes'>"+votes+"</td><td class='Tags'>"+tags+"</td></tr>"
+            tableBody = $("table")
+            tableBody.append(markup)};
+    });
+    }else{
+    getfilterreq=$.getJSON("http://127.0.0.1:8000/polls/GET/?tags="+checklist,function(data){
+        for (let i = 0; i < data.length; i++){
+            currentques=data[i]
+            quesno=i+1
+            ques=currentques["Question"]
+            votes=0
+            votecontainer=Object.values(currentques["OptionVote"])
+            for (let j = 0; j < votecontainer.length; j++) {
+                votes +=votecontainer[j];
+            };
+            tags=currentques["Tags"]
+            assignedhref="Detail.html?value="+currentques["QID"]
+    
+            markup = "<tr class='Content'><td class='No'>"+quesno.toString()+"</td><td class='Question'>"+"<a href="+assignedhref+">"+ques+"</a>"+"</td><td class='Votes'>"+votes+"</td><td class='Tags'>"+tags+"</td></tr>"
+            tableBody = $("table")
+            tableBody.append(markup);
+        }
+    });
+}
+
+    //tableBody = $("table");
+    //tableBody.append(markup);
+
+
+    //console.log(checklist);
+};
+
+
+</script>
